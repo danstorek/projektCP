@@ -20,9 +20,9 @@ type Item = {
   name: string;
   id: Number;
   pokemon_v2_pokemonspecy: V2Gen;
-  weight: Number;
-  height: Number;
-  base_experience: Number;
+  weight: number;
+  height: number;
+  base_experience: number;
 };
 
 const query = gql`
@@ -142,9 +142,9 @@ const Page = () => {
                       <br /><br />
                       Zkušenosti: {item.base_experience} 
                       <br /><br />
-                      Váha: {item.weight}
+                      Váha: {item.weight / 10} kg
                       <br />
-                      Výška: {item.height}
+                      Výška: {item.height * 10} cm
                       <br /><br />
                       <button id={item.name + ";" + item.id + ";" + item.pokemon_v2_pokemonspecy.generation_id} className={styles.nofavoritebutton} onClick={favorite} type="button">Do oblíbených</button>
                     </div>
