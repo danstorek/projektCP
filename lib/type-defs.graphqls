@@ -1,0 +1,8 @@
+type Query {
+  viewer: User!
+  zobrazKanal: Kanal!
+}
+
+type Mutation {
+  updateName(name: String!): User!
+}

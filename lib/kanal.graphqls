@@ -1,0 +1,8 @@
+type Kanal{
+    id: ID!
+    nazev: String!
+    popis: String
+    odbery: Int!
+    img: String!
+    url: String!
+}

@@ -1,0 +1,10 @@
+query zobrazKanal{
+    zobrazKanal{
+        id
+        nazev
+        popis
+        odbery
+        img
+        url
+    }
+}
