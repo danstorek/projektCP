@@ -10,15 +10,19 @@ import styles from '../styles/Home.module.css';
 
 import {query} from '../components/query';
 
+
+//Vyhledávání
 export const searchChange = (event, setSearch) => {
   setSearch(event.target.value);
 }
 
+//Přihlášení
 export const isLogged = () => {
     if(firebase.auth().currentUser) return true;
     else return false;
 }
 
+//Dark Mode
 export const darkMode = () => {
   console.log(localStorage.getItem("dark"));
   if (localStorage.getItem("dark")) {
@@ -30,7 +34,6 @@ export const darkMode = () => {
     return(styles.maindark);
   }
 }
-
 export const darkModeUseEffect = (setDark) => {
   useEffect(() => {
     if (localStorage.getItem("dark")) {
@@ -42,6 +45,7 @@ export const darkModeUseEffect = (setDark) => {
   })
 }
 
+//Pokelist
 export const getPokeList = async (setData, setLoad) => {
   const response = await useApollo(null).query({ query });
   setData(response.data.pokemon_v2_pokemon);
@@ -49,13 +53,13 @@ export const getPokeList = async (setData, setLoad) => {
   console.log("API items loaded");
 }
 
+//Favorites
 export const fetchFavs = async (setFav) => {
   if (isLogged()) {
       const doc = await firebase.firestore().collection("users").doc(firebase.auth().currentUser?.uid).get();
       setFav((doc.data() || "")['favorite']);
   }
 }
-
 export const favorite = (event) => {
   if (isLogged()) {
     const collection = firebase.firestore().collection("users").doc(firebase.auth().currentUser?.uid);
@@ -75,7 +79,6 @@ export const favorite = (event) => {
   }
   else alert("Pro tuto akci musíš být přihlášen.");
 }
-
 export const removeFav = (event, setFav) => {
   const collection = firebase.firestore().collection("users").doc(firebase.auth().currentUser?.uid);
   collection.update({
