@@ -2,60 +2,22 @@ import { Menu } from '../components/menu';
 import styles from '../styles/Home.module.css'
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import firebase from "../components/firebaseconnect";
 import { Image } from 'react-bootstrap';
 
 // Add the Firebase services that you want to use
 import "firebase/auth";
 import "firebase/firestore";
 
+import {darkMode, darkModeUseEffect, fetchFavs, removeFav, searchChange} from "../components/functions";
+
 const Page = () => {
   const [search, setSearch] = useState("");
   const [fav, setFav] = useState([]);
 
-  const searchChange = (event) => {
-    setSearch(event.target.value);
-  }
-
-  const removeFav = (event) => {
-    const collection = firebase.firestore().collection("users").doc(firebase.auth().currentUser?.uid);
-    collection.update({
-      favorite: firebase.firestore.FieldValue.arrayRemove(event.target.name)
-    });
-    fetchFavs();
-  }
-
   const [dark, setDark] = useState(styles.mainwhite);
+  darkModeUseEffect(setDark);
 
-  useEffect(() => {
-    if (localStorage.getItem("dark")) {
-      setDark(styles.maindark);
-    }
-    else {
-      setDark(styles.mainwhite);
-    }
-  })
-
-  const darkMode = () => {
-    console.log(localStorage.getItem("dark"));
-    if (localStorage.getItem("dark")) {
-      localStorage.removeItem("dark");
-      setDark(styles.mainwhite);
-    }
-    else {
-      localStorage.setItem("dark", "1");
-      setDark(styles.maindark);
-    }
-  }
-
-  const fetchFavs = async () => {
-    if (firebase.auth().currentUser) {
-        const doc = await firebase.firestore().collection("users").doc(firebase.auth().currentUser?.uid).get();
-        setFav((doc.data() || "")['favorite']);
-    }
-  }
-
-  fetchFavs();
+  fetchFavs(setFav);
   return (
     <div className={styles.container}>
       <Head>
@@ -65,11 +27,11 @@ const Page = () => {
       </Head>
       <Menu />
       <main className={dark}>
-        <button className={styles.buttontoggle} onClick={darkMode}>Dark Mode</button>
+        <button className={styles.buttontoggle} onClick={() => {setDark(darkMode());}}>Dark Mode</button>
         <h1 className={"display-1 " + styles.title}>
           Seznam oblíbených pokémonů
         </h1>
-        <input className={styles.search} onChange={searchChange} placeholder="Vyhledávání" />
+        <input className={styles.search} onChange={(event)=>searchChange(event, setSearch)} placeholder="Vyhledávání" />
         <div className={styles.flexdiv}>
         {
           fav.map((item: string, key) => {
@@ -80,7 +42,7 @@ const Page = () => {
                   <h4><b>{item.split(";")[0][0].toUpperCase() + item.split(";")[0].substring(1)}</b></h4>
                   <p>{item.split(";")[2]}. generace</p>
                 </div>
-                <button name={item} onClick={removeFav} className={styles.nofavoritebutton} type="button">Odebrat</button>
+                <button name={item} onClick={(event)=>{removeFav(event, setFav)}} className={styles.nofavoritebutton} type="button">Odebrat</button>
               </div>
           })
         }

@@ -4,30 +4,12 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+import {darkMode, darkModeUseEffect} from "../components/functions"
+
 const About = () => {
 
   const [dark, setDark] = useState(styles.mainwhite);
-
-  useEffect(() => {
-    if (localStorage.getItem("dark")) {
-      setDark(styles.maindark);
-    }
-    else {
-      setDark(styles.mainwhite);
-    }
-  })
-
-  const darkMode = () => {
-    console.log(localStorage.getItem("dark"));
-    if (localStorage.getItem("dark")) {
-      localStorage.removeItem("dark");
-      setDark(styles.mainwhite);
-    }
-    else {
-      localStorage.setItem("dark", "1");
-      setDark(styles.maindark);
-    }
-  }
+  darkModeUseEffect(setDark);
 
   return (
     <div className={styles.container}>
@@ -38,7 +20,7 @@ const About = () => {
       </Head>
       <Menu />
       <main className={dark}>
-        <button className={styles.buttontoggle} onClick={darkMode}>Dark Mode</button>
+      <button className={styles.buttontoggle} onClick={() => {setDark(darkMode());}}>Dark Mode</button>
       <h1 className={"display-1 "+styles.title}>O nás</h1>
       <h2 style={{marginTop:"50px"}}>Klikněte<Link href="/main"><a> zde </a></Link>pro přesměrování na hlavní stránku.</h2>
       </main>

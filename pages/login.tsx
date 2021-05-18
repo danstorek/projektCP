@@ -11,12 +11,14 @@ import firebase from "../components/firebaseconnect";
 import "firebase/auth";
 import "firebase/firestore";
 
+import {darkMode, darkModeUseEffect, isLogged} from "../components/functions"
+
 type Errors = {
   email?: any;
   password?: any;
 };
 
-if (firebase.auth().currentUser) {
+if (isLogged()) {
   firebase.auth().signOut();
 }
 
@@ -26,27 +28,7 @@ const Page = () => {
   const [submitting, setSubmitting] = useState(false);
 
   const [dark, setDark] = useState(styles.mainwhite);
-
-  useEffect(() => {
-    if (localStorage.getItem("dark")) {
-      setDark(styles.maindark);
-    }
-    else {
-      setDark(styles.mainwhite);
-    }
-  })
-
-  const darkMode = () => {
-    console.log(localStorage.getItem("dark"));
-    if (localStorage.getItem("dark")) {
-      localStorage.removeItem("dark");
-      setDark(styles.mainwhite);
-    }
-    else {
-      localStorage.setItem("dark", "1");
-      setDark(styles.maindark);
-    }
-  }
+  darkModeUseEffect(setDark);
 
   return (
     <div className={styles.container}>
@@ -56,7 +38,7 @@ const Page = () => {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossOrigin="anonymous" />
       </Head>
       <main className={dark}>
-        <button className={styles.buttontoggle} onClick={darkMode}>Dark Mode</button>
+      <button className={styles.buttontoggle} onClick={() => {setDark(darkMode());}}>Dark Mode</button>
         <h1 className={styles.title}>
           Přihlášení
         </h1><br></br>

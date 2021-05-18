@@ -5,6 +5,8 @@ import styled from 'styled-components'
 // must be listed before other Firebase SDKs
 import firebase from "./firebaseconnect";
 
+import {isLogged} from "../components/functions";
+
 // Add the Firebase services that you want to use
 import "firebase/auth";
 import "firebase/firestore";
@@ -24,11 +26,11 @@ const NavBar = styled.nav`
 `;
 
 export const Menu: FC = () => {
-  const [logged, setLogged] = useState(firebase.auth().currentUser);
+  const [logged, setLogged] = useState(isLogged());
 
   const logout = () => {
     firebase.auth().signOut();
-    setLogged(null);
+    setLogged(false);
     location.reload(true);
   }
 

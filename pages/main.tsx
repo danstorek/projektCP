@@ -1,16 +1,15 @@
 import { Menu } from '../components/menu';
 import styles from '../styles/Home.module.css'
 import Head from 'next/head';
-import { gql } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import { Image } from 'react-bootstrap';
-import { useApollo } from '../lib/apollo';
-import firebase from "../components/firebaseconnect";
 import Popup from 'reactjs-popup';
 
 // Add the Firebase services that you want to use
 import "firebase/auth";
 import "firebase/firestore";
+
+import {favorite, darkMode, getPokeList, searchChange, darkModeUseEffect} from "../components/functions"
 
 type V2Gen = {
   generation_id: Number;
@@ -25,81 +24,15 @@ type Item = {
   base_experience: number;
 };
 
-const query = gql`
-  query allPokemons {
-    pokemon_v2_pokemon(order_by: {id: asc}) {
-      name
-      id
-      pokemon_v2_pokemonspecy {
-        generation_id
-      }
-      weight
-      height
-      base_experience
-    }
-  }
-`;
-
 const Page = () => {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(false);
   const [search, setSearch] = useState("");
 
-  const getPokeList = async () => {
-    const response = await useApollo(null).query({ query });
-    setData(response.data.pokemon_v2_pokemon);
-    setLoad(true);
-    console.log("API items loaded");
-  }
-
   const [dark, setDark] = useState(styles.mainwhite);
+  darkModeUseEffect(setDark);
 
-  useEffect(() => {
-    if (localStorage.getItem("dark")) {
-      setDark(styles.maindark);
-    }
-    else {
-      setDark(styles.mainwhite);
-    }
-  })
-
-  const darkMode = () => {
-    console.log(localStorage.getItem("dark"));
-    if (localStorage.getItem("dark")) {
-      localStorage.removeItem("dark");
-      setDark(styles.mainwhite);
-    }
-    else {
-      localStorage.setItem("dark", "1");
-      setDark(styles.maindark);
-    }
-  }
-
-  const searchChange = (event: any) => {
-    setSearch(event.target.value);
-  }
-
-  const favorite = (event) => {
-    if (firebase.auth().currentUser) {
-      const collection = firebase.firestore().collection("users").doc(firebase.auth().currentUser?.uid);
-      if (event.target.className === styles.favoritebutton) {
-        event.target.className = styles.nofavoritebutton;
-        collection.update({
-          favorite: firebase.firestore.FieldValue.arrayRemove(event.target.id)
-        });
-      }
-      else {
-        collection.update({
-          favorite: firebase.firestore.FieldValue.arrayUnion(event.target.id)
-        });
-        event.target.className = styles.favoritebutton;
-        //event.target.disabled = true;
-      }
-    }
-    else alert("Pro tuto akci musíš být přihlášen.");
-  }
-
-  getPokeList();
+  getPokeList(setData, setLoad);
 
   return (
     <div className={styles.container}>
@@ -110,11 +43,11 @@ const Page = () => {
       </Head>
       <Menu />
       <main className={dark}>
-        <button className={styles.buttontoggle} onClick={darkMode}>Dark Mode</button>
+        <button className={styles.buttontoggle} onClick={() => {setDark(darkMode());}}>Dark Mode</button>
         <h1 className={"display-1 " + styles.title}>
           Seznam všech pokémonů
         </h1>
-        <input className={styles.search} onChange={searchChange} placeholder="Vyhledávání" />
+        <input className={styles.search} onChange={(event)=>searchChange(event, setSearch)} placeholder="Vyhledávání" />
         <div className={styles.flexdiv}>
           {load &&
             data.map((item: Item, key) => {
@@ -133,18 +66,18 @@ const Page = () => {
                 {close => (
                   <div className={styles.modal}>
                     <button className={styles.close} onClick={close}>
-                      &times;
+                      X
                     </button>
-                    <div className={styles.header}> {item.name[0].toUpperCase() + item.name.substring(1)} <Image src={"./" + item.name + ".png"} width="128px" /> </div>
+                    <div className={styles.header}> <Image src={"./" + item.name + ".png"} width="128px" />{item.name[0].toUpperCase() + item.name.substring(1)}  </div>
                     <div className={styles.content}>
                       {' '}
-                      {item.pokemon_v2_pokemonspecy.generation_id}. generace
+                      <strong>Generace: </strong> {item.pokemon_v2_pokemonspecy.generation_id}
                       <br /><br />
-                      Zkušenosti: {item.base_experience} 
+                      <strong>Zkušenosti: </strong> {item.base_experience} 
                       <br /><br />
-                      Váha: {item.weight / 10} kg
+                      <strong>Váha: </strong> {item.weight / 10} kg
                       <br />
-                      Výška: {item.height * 10} cm
+                      <strong>Výška: </strong> {item.height * 10} cm
                       <br /><br />
                       <button id={item.name + ";" + item.id + ";" + item.pokemon_v2_pokemonspecy.generation_id} className={styles.nofavoritebutton} onClick={favorite} type="button">Do oblíbených</button>
                     </div>
