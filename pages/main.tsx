@@ -1,7 +1,7 @@
 import { Menu } from '../components/menu';
 import styles from '../styles/Home.module.css'
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Image } from 'react-bootstrap';
 import Popup from 'reactjs-popup';
 

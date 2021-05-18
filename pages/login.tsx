@@ -1,7 +1,7 @@
 import styles from '../styles/Home.module.css'
 import Head from 'next/head';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import React, {useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs

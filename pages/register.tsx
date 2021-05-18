@@ -9,7 +9,7 @@ import firebase from "../components/firebaseconnect";
 // Add the Firebase services that you want to use
 import "firebase/auth";
 import "firebase/firestore";
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import {darkMode, darkModeUseEffect} from "../components/functions";
 
