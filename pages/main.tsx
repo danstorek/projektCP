@@ -14,12 +14,12 @@ import {setFavorite, getDarkMode, getPokeList, searchChange, useDarkMode} from "
 import languageContext from "../components/language";
 
 type V2Gen = {
-  generation_id: Number;
+  generation_id: number;
 }
 
 type Item = {
   name: string;
-  id: Number;
+  id: number;
   pokemon_v2_pokemonspecy: V2Gen;
   weight: number;
   height: number;
