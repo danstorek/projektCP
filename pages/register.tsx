@@ -9,9 +9,11 @@ import firebase from "../components/firebaseconnect";
 // Add the Firebase services that you want to use
 import "firebase/auth";
 import "firebase/firestore";
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
-import {darkMode, darkModeUseEffect} from "../components/functions";
+import {getDarkMode, useDarkMode} from "../components/functions";
+
+import languageContext from "../components/language";
 
 type Errors = {
   username?: any;
@@ -25,20 +27,27 @@ const Page = () => {
   const [error, setError] = useState(styles.ok);
   const [submitting, setSubmitting] = useState(false);
 
+  const langContext = useContext(languageContext);
+
   const [dark, setDark] = useState(styles.mainwhite);
-  darkModeUseEffect(setDark);
+  useDarkMode(setDark);
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Registrace</title>
+        <title>Registration</title>
         <link rel="icon" href="/favicon.ico" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossOrigin="anonymous" />
       </Head>
       <main className={dark}>
-        <button className={styles.buttontoggle} onClick={() => {setDark(darkMode());}}>Dark Mode</button>
+        <button className={styles.buttontoggle} onClick={() => {setDark(getDarkMode());}}>Dark Mode</button>
         <h1 className={styles.title}>
-          Registrace
+        {
+          langContext.language === "cz" && "Registrace"
+        }
+        {
+          langContext.language === "en" && "Registration"
+        }
         </h1><br></br>
         <Formik
           initialValues={{ email: '', password: '', password2: '', username: ''}}
@@ -47,39 +56,101 @@ const Page = () => {
 
             //username errors
             if (!values.username) {
-              errors.username = <p className={styles.error}>Vyžadovaná položka</p>;
+              errors.username = <p className={styles.error}>
+                {
+          langContext.language === "cz" && "Vyžadovaná položka"
+        }
+        {
+          langContext.language === "en" && "Required item"
+        }
+              </p>;
             } else if (
               !/^[a-z0-9_-]{3,15}$/i.test(values.username)
             ) {
-              errors.username = <p className={styles.error}>Neplatný username</p>;
+              errors.username = <p className={styles.error}>
+                {
+          langContext.language === "cz" && "Neplatné uživatelské jméno"
+        }
+        {
+          langContext.language === "en" && "Invalid username"
+        }
+              </p>;
             }
 
             //Email errors
             if (!values.email) {
-              errors.email = <p className={styles.error}>Vyžadovaná položka</p>;
+              errors.email = <p className={styles.error}>
+                {
+          langContext.language === "cz" && "Vyžadovaná položka"
+        }
+        {
+          langContext.language === "en" && "Required item"
+        }
+              </p>;
             } else if (
               !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
             ) {
-              errors.email = <p className={styles.error}>Neplatný email</p>;
+              errors.email = <p className={styles.error}>
+                {
+          langContext.language === "cz" && "Neplatný email"
+        }
+        {
+          langContext.language === "en" && "Invalid email"
+        }
+              </p>;
             }
 
             //Password errors
             if (!values.password) {
-              errors.password = <p className={styles.error}>Vyžadovaná položka</p>;
+              errors.password = <p className={styles.error}>
+                {
+          langContext.language === "cz" && "Vyžadovaná položka"
+        }
+        {
+          langContext.language === "en" && "Required item"
+        }
+              </p>;
             }
             else if (values.password.length > 15) {
-              errors.password = <p className={styles.error}>Heslo musí mít méně než 15 znaků</p>;
+              errors.password = <p className={styles.error}>
+              {
+          langContext.language === "cz" && "Heslo musí mít méně než 15 znaků"
+        }
+        {
+          langContext.language === "en" && "Password must have less than 15 chars"
+        }</p>;
             }
             else if (values.password.length < 6) {
-              errors.password = <p className={styles.error}>Heslo musí mít více než 6 znaků</p>;
+              errors.password = <p className={styles.error}>
+                {
+          langContext.language === "cz" && "Heslo musí mít více než 6 znaků"
+        }
+        {
+          langContext.language === "en" && "Password must have more than 6 chars"
+        }
+              </p>;
             }
 
             //Password2 errors
             if (!values.password2) {
-              errors.password2 = <p className={styles.error}>Vyžadovaná položka</p>;
+              errors.password2 = <p className={styles.error}>
+                {
+          langContext.language === "cz" && "Vyžadovaná položka"
+        }
+        {
+          langContext.language === "en" && "Required item"
+        }
+              </p>;
             }
             else if (values.password != values.password2) {
-              errors.password2 = <p className={styles.error}>Hesla se neshodují</p>;
+              errors.password2 = <p className={styles.error}>
+                {
+          langContext.language === "cz" && "Hesla se neshodují"
+        }
+        {
+          langContext.language === "en" && "Passwords do not match"
+        }
+              </p>;
             }
 
             console.log(errors);
@@ -97,12 +168,14 @@ const Page = () => {
                     favorite: [],
                   });
                   setSubmitting(true);
-                  setMsg("Byl jsi úspěšně zaregistrován.");
+                  if(langContext.language==="cz")setMsg("Byl jsi úspěšně zaregistrován.");
+                  else if(langContext.language==="en")setMsg("You were successfully registered.");
                   setError(styles.ok);
                   // ...
                 })
                 .catch(() => {
-                  setMsg("Vyskytla se chyba. Zkontroluj prosím své údaje.");
+                  if(langContext.language==="cz")setMsg("Zkontroluj prosím své údaje.");
+                  else if(langContext.language==="en")setMsg("Please check your credentials.");
                   setError(styles.error);
                 });
             }, 400);
@@ -110,26 +183,59 @@ const Page = () => {
         >
           {() => (
             <Form>
-              <h2 className={styles.title2}>Username</h2>
+              <h2 className={styles.title2}>
+                {
+          langContext.language === "cz" && "Uživatelské jméno"
+        }
+        {
+          langContext.language === "en" && "Username"
+        }
+              </h2>
               <Field disabled={submitting} type="text" name="username" />
               <ErrorMessage name="username" component="div" />
               <h2 className={styles.title2}>Email</h2>
               <Field disabled={submitting} type="email" name="email" />
               <ErrorMessage name="email" component="div" />
-              <h2 className={styles.title2}>Heslo</h2>
+              <h2 className={styles.title2}>
+              {
+          langContext.language === "cz" && "Heslo"
+        }
+        {
+          langContext.language === "en" && "Password"
+        }
+              </h2>
               <Field disabled={submitting} type="password" name="password" />
               <ErrorMessage name="password" component="div" />
-              <h2 className={styles.title2}>Heslo pro ověření</h2>
+              <h2 className={styles.title2}>
+                {
+          langContext.language === "cz" && "Heslo pro ověření"
+        }
+        {
+          langContext.language === "en" && "Password for verification"
+        }
+              </h2>
               <Field disabled={submitting} type="password" name="password2" />
               <ErrorMessage name="password2" component="div" /><br></br>
               <button type="submit" className="btn btn-primary" disabled={submitting}>
-                Zaregistrovat se
+              {
+          langContext.language === "cz" && "Zaregistrovat se"
+        }
+        {
+          langContext.language === "en" && "Register"
+        }
           </button>
             </Form>
           )}
         </Formik>
         <p className={error}>{msg}</p>
-        <Link href="./main">Přejít na hlavní stránku</Link>
+        <Link href="./main">
+        {
+          langContext.language === "cz" && "Zpět na hlavní stránku"
+        }
+        {
+          langContext.language === "en" && "Back to the main page"
+        }
+        </Link>
       </main>
     </div>
   )

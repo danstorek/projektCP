@@ -1,14 +1,17 @@
 import { AppProps } from 'next/app'
-import { ApolloProvider } from '@apollo/client'
-import { useApollo } from '../lib/apollo'
 import '../styles/globals.css'
+import languageContext from "../components/language"
+import { useState } from 'react';
 
 export default function App({ Component, pageProps }: AppProps) {
-  const apolloClient = useApollo(pageProps.initialApolloState)
-
+  const [lang, setLang] = useState("en");
+  const toggleLang = () => {
+    if(lang == "en") setLang("cz");
+    else setLang("en");
+  }
   return (
-    <ApolloProvider client={apolloClient}>
+    <languageContext.Provider value={{language: lang, toggleLanguage: toggleLang}}>
       <Component {...pageProps} />
-    </ApolloProvider>
+    </languageContext.Provider>
   )
 }

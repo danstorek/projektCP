@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import firebase from "../components/firebaseconnect";
+import firebase from "./firebaseconnect";
 import "firebase/auth";
 import "firebase/firestore";
 
@@ -8,7 +8,7 @@ import { useApollo } from '../lib/apollo';
 
 import styles from '../styles/Home.module.css';
 
-import {query} from '../components/query';
+import {query} from './query';
 
 
 //Vyhledávání
@@ -18,12 +18,16 @@ export const searchChange = (event, setSearch) => {
 
 //Přihlášení
 export const isLogged = () => {
-    if(firebase.auth().currentUser) return true;
-    else return false;
+    // if(firebase.auth().currentUser) return true;
+    // else return false;
+
+    //return firebase.auth().currentUser ? true : false;
+
+    return !!firebase.auth().currentUser;
 }
 
 //Dark Mode
-export const darkMode = () => {
+export const getDarkMode = () => {
   console.log(localStorage.getItem("dark"));
   if (localStorage.getItem("dark")) {
     localStorage.removeItem("dark");
@@ -34,7 +38,7 @@ export const darkMode = () => {
     return(styles.maindark);
   }
 }
-export const darkModeUseEffect = (setDark) => {
+export const useDarkMode = (setDark) => {
   useEffect(() => {
     if (localStorage.getItem("dark")) {
       setDark(styles.maindark);
@@ -60,7 +64,7 @@ export const fetchFavs = async (setFav) => {
       setFav((doc.data() || "")['favorite']);
   }
 }
-export const favorite = (event) => {
+export const setFavorite = (event) => {
   if (isLogged()) {
     const collection = firebase.firestore().collection("users").doc(firebase.auth().currentUser?.uid);
     if (event.target.className === styles.favoritebutton) {
@@ -79,7 +83,7 @@ export const favorite = (event) => {
   }
   else alert("Pro tuto akci musíš být přihlášen.");
 }
-export const removeFav = (event, setFav) => {
+export const removeFavorite = (event, setFav) => {
   const collection = firebase.firestore().collection("users").doc(firebase.auth().currentUser?.uid);
   collection.update({
     favorite: firebase.firestore.FieldValue.arrayRemove(event.target.name)

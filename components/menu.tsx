@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React, { FC, useState } from 'react'
+import React, { FC, useContext, useState } from 'react'
 import styled from 'styled-components'
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
@@ -11,6 +11,9 @@ import {isLogged} from "../components/functions";
 import "firebase/auth";
 import "firebase/firestore";
 
+import ToggleLanguageButton from './languageToggleButton';
+
+import languageContext from "../components/language";
 
 const NavBreak = styled.div`
   width: 100px;
@@ -28,6 +31,8 @@ const NavBar = styled.nav`
 export const Menu: FC = () => {
   const [logged, setLogged] = useState(isLogged());
 
+  const langContext = useContext(languageContext);
+
   const logout = () => {
     firebase.auth().signOut();
     setLogged(false);
@@ -36,23 +41,54 @@ export const Menu: FC = () => {
 
   return (<NavBar className="navbar navbar-expand-lg navbar-dark bg-dark" style={{width: "100%"}}>
     <a className="navbar-brand" href="#">Menu</a>
+    <ToggleLanguageButton></ToggleLanguageButton>
     <NavBreak></NavBreak>
     <div>
       <ul className="navbar-nav">
-        <li className="nav-item"><Link href="../main" passHref><a className="nav-link">Seznam pokémonů</a></Link></li>
-        <li className="nav-item"><Link href="../favorite" passHref><a className="nav-link">Oblíbení pokémoni</a></Link></li>
-        <li className="nav-item"><Link href="../about" passHref><a className="nav-link">O nás</a></Link></li>
+        <li className="nav-item"><Link href="../main" passHref><a className="nav-link">
+        {
+          langContext.language === "cz" && "Seznam pokémonů"
+        }
+        {
+          langContext.language === "en" && "Pokemon list"
+        }</a></Link></li>
+        <li className="nav-item"><Link href="../favorite" passHref><a className="nav-link">
+        {
+          langContext.language === "cz" && "Oblíbení pokémoni"
+        }
+        {
+          langContext.language === "en" && "Favorite pokemons"
+        }</a></Link></li>
+        <li className="nav-item"><Link href="../about" passHref><a className="nav-link">
+        {
+          langContext.language === "cz" && "O nás"
+        }
+        {
+          langContext.language === "en" && "About us"
+        }</a></Link></li>
       </ul>
     </div>
     <NavBreak></NavBreak>
     <div>
         {
           !logged &&
-          <ul className="navbar-nav"><li className="nav-item"><Link href="../login" passHref><a className="nav-link">Přihlásit se</a></Link></li></ul>
+          <ul className="navbar-nav"><li className="nav-item"><Link href="../login" passHref><a className="nav-link">
+            {
+          langContext.language === "cz" && "Přihlásit se"
+        }
+        {
+          langContext.language === "en" && "Login"
+        }</a></Link></li></ul>
         }
         {
           logged &&
-          <ul className="navbar-nav"><li className="nav-item"><Link href="../account" passHref><a className="nav-link">{firebase.auth().currentUser?.email}</a></Link></li><li className="nav-item"><button className="logout" onClick={logout}>Odhlásit se</button></li></ul>
+          <ul className="navbar-nav"><li className="nav-item"><Link href="../account" passHref><a className="nav-link">{firebase.auth().currentUser?.email}</a></Link></li><li className="nav-item"><button className="logout" onClick={logout}>
+          {
+          langContext.language === "cz" && "Odhlásit se"
+        }
+        {
+          langContext.language === "en" && "Log out"
+        }</button></li></ul>
         }
     </div>
   </NavBar>

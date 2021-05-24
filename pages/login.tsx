@@ -1,7 +1,7 @@
 import styles from '../styles/Home.module.css'
 import Head from 'next/head';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
@@ -11,7 +11,9 @@ import firebase from "../components/firebaseconnect";
 import "firebase/auth";
 import "firebase/firestore";
 
-import {darkMode, darkModeUseEffect, isLogged} from "../components/functions"
+import {getDarkMode, useDarkMode, isLogged} from "../components/functions"
+
+import languageContext from "../components/language";
 
 type Errors = {
   email?: any;
@@ -27,20 +29,27 @@ const Page = () => {
   const [error, setError] = useState(styles.ok);
   const [submitting, setSubmitting] = useState(false);
 
+  const langContext = useContext(languageContext);
+
   const [dark, setDark] = useState(styles.mainwhite);
-  darkModeUseEffect(setDark);
+  useDarkMode(setDark);
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Přihlášení</title>
+        <title>Login</title>
         <link rel="icon" href="/favicon.ico" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossOrigin="anonymous" />
       </Head>
       <main className={dark}>
-      <button className={styles.buttontoggle} onClick={() => {setDark(darkMode());}}>Dark Mode</button>
+      <button className={styles.buttontoggle} onClick={() => {setDark(getDarkMode());}}>Dark Mode</button>
         <h1 className={styles.title}>
-          Přihlášení
+        {
+          langContext.language === "cz" && "Přihlášení"
+        }
+        {
+          langContext.language === "en" && "Login"
+        }
         </h1><br></br>
         <Formik
           initialValues={{ email: '', password: '' }}
@@ -49,16 +58,37 @@ const Page = () => {
             setMsg("");
             //Email errors
             if (!values.email) {
-              errors.email = <p className={styles.error}>Vyžadovaná položka</p>;
+              errors.email = <p className={styles.error}>
+                {
+          langContext.language === "cz" && "Vyžadovaná položka"
+        }
+        {
+          langContext.language === "en" && "Required item"
+        }
+              </p>;
             } else if (
               !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
             ) {
-              errors.email = <p className={styles.error}>Neplatný email</p>;
+              errors.email = <p className={styles.error}>
+                {
+          langContext.language === "cz" && "Neplatný email"
+        }
+        {
+          langContext.language === "en" && "Invalid email"
+        }
+              </p>;
             }
 
             //Password errors
             if (!values.password) {
-              errors.password = <p className={styles.error}>Vyžadovaná položka</p>;
+              errors.password = <p className={styles.error}>
+                {
+          langContext.language === "cz" && "Vyžadovaná položka"
+        }
+        {
+          langContext.language === "en" && "Required item"
+        }
+              </p>;
             }
 
             return errors;
@@ -68,14 +98,15 @@ const Page = () => {
               firebase.auth().signInWithEmailAndPassword(values.email, values.password)
                 .then(() => {
                   // Signed in
-                  console.log("Přihlášen");
-                  setMsg("Byl jsi úspěšně přihlášen");
+                  if(langContext.language==="cz")setMsg("Byl jsi úspěšně přihlášen");
+                  else if(langContext.language==="en")setMsg("You were successfully logged in");
                   setSubmitting(true);
                   setError(styles.ok);
                   // ...
                 })
                 .catch(() => {
-                  setMsg("Vyskytla se chyba. Zkontroluj prosím své údaje.");
+                  if(langContext.language==="cz")setMsg("Prosím překontroluj své údaje");
+                  else if(langContext.language==="en")setMsg("Please check your credentials");
                   setError(styles.error);
                 });
             }, 400);
@@ -86,20 +117,44 @@ const Page = () => {
               <h2 className={styles.title2}>Email</h2>
               <Field disabled={submitting} type="email" name="email" />
               <ErrorMessage name="email" component="div"/>
-              <h2 className={styles.title2}>Heslo</h2>
+              <h2 className={styles.title2}>
+              {
+          langContext.language === "cz" && "Heslo"
+        }
+        {
+          langContext.language === "en" && "Password"
+        }
+              </h2>
               <Field disabled={submitting} type="password" name="password" />
               <ErrorMessage name="password" component="div"/><br/>
               <button type="submit" className="btn btn-primary" disabled={submitting}>
-                Přihlásit se
+              {
+          langContext.language === "cz" && "Přihlásit se"
+        }
+        {
+          langContext.language === "en" && "Login"
+        }
           </button>
               <Link href="./register"><button type="submit" className="btn btn-primary">
-                Zaregistrovat se
+              {
+          langContext.language === "cz" && "Zaregistrovat se"
+        }
+        {
+          langContext.language === "en" && "Register"
+        }
           </button></Link>
             </Form>
           )}
         </Formik>
         <p className={error}>{msg}</p>
-        <Link href="./main">Přejít na hlavní stránku</Link>
+        <Link href="./main">
+        {
+          langContext.language === "cz" && "Zpět na hlavní stránku"
+        }
+        {
+          langContext.language === "en" && "Back to the main page"
+        }
+        </Link>
       </main>
     </div>
   )
