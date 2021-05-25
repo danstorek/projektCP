@@ -3,7 +3,7 @@ import '../styles/globals.css'
 import languageContext from "../components/language"
 import { useState } from 'react';
 
-export default function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   const [lang, setLang] = useState("en");
   const toggleLang = () => {
     if(lang == "en") setLang("cz");
@@ -15,3 +15,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </languageContext.Provider>
   )
 }
+
+export default App;
