@@ -56,7 +56,12 @@ const Page = () => {
           langContext.language === "en" && "List of all pokemons"
         }
         </h1>
-        <input className={styles.search} onChange={(event)=>searchChange(event, setSearch)} placeholder="Vyhledávání" />
+        {
+          langContext.language === "cz" && <input className={styles.search} onChange={(event)=>searchChange(event, setSearch)} placeholder="Vyhledávání" />
+        }
+        {
+          langContext.language === "en" && <input className={styles.search} onChange={(event)=>searchChange(event, setSearch)} placeholder="Search" />
+        }
         <div className={styles.flexdiv}>
           {load &&
             data.map((item: Item, key) => {
