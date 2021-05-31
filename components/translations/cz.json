@@ -1,13 +1,24 @@
 {
+    "app.loading": "Načítání...",
     "app.pokemonlist": "Seznam pokémonů",
     "app.favoritepokemonlist": "Oblíbení pokémoni",
     "app.about": "O nás",
     "app.login": "Přihlásit se",
     "app.logout": "Odhlásit se",
+    "app.register": "Registrace",
     "app.clickheretogetback": "Klikněte zde pro přesměrování na hlavní stránku",
     "app.accsettings": "Nastavení účtu",
     "app.usrnamechange": "Změna uživatelského jména",
     "app.requireditem": "Vyžadovaná položka",
     "app.invaliditem": "Špatně vyplněná položka",
-    "app.editsuccess": "Změna byla úspěšně uložena"
+    "app.editsuccess": "Změna byla úspěšně uložena",
+    "app.save": "Uložit",
+    "app.generation": ". generace",
+    "app.exp": "Zkušenosti: ",
+    "app.weight": "Váha: ",
+    "app.height": "Výška: ",
+    "app.favorite": "Oblíbený",
+    "app.remove": "Odebrat",
+    "app.passwordlong": "Heslo je příliš dlouhé",
+    "app.passwordshort": "Heslo je příliš krátké"
 }

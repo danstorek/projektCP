@@ -1,3 +1,24 @@
 {
-    
+    "app.loading": "Loading...",
+    "app.pokemonlist": "Pokemon list",
+    "app.favoritepokemonlist": "Favorite pokemons",
+    "app.about": "About us",
+    "app.login": "Login",
+    "app.logout": "Logout",
+    "app.register": "Register",
+    "app.clickheretogetback": "Click here to get to the main page.",
+    "app.accsettings": "Account settings",
+    "app.usrnamechange": "Username change",
+    "app.requireditem": "Required item",
+    "app.invaliditem": "Invalid item",
+    "app.editsuccess": "Item was successfully edited",
+    "app.save": "Save",
+    "app.generation": ". generation",
+    "app.exp": "Experience: ",
+    "app.weight": "Weight: ",
+    "app.height": "Height: ",
+    "app.favorite": "Favorite",
+    "app.remove": "Remove",
+    "app.passwordlong": "Password is too long",
+    "app.passwordshort": "Password is too short"
 }

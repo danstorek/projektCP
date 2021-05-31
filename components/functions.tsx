@@ -10,6 +10,18 @@ import styles from '../styles/Home.module.css';
 
 import {query} from './query';
 
+import messages_cz from "../components/translations/cz.json";
+import messages_en from "../components/translations/en.json";
+
+export const getLanguageText = (languageCode: string) => {
+  if(languageCode == "cz"){
+    return messages_cz;
+  }
+  else if(languageCode == "en"){
+    return messages_en;
+  }
+  else "";
+}
 
 //Vyhledávání
 export const searchChange = (event, setSearch) => {
