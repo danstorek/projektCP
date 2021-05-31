@@ -9,7 +9,7 @@ import Popup from 'reactjs-popup';
 import "firebase/auth";
 import "firebase/firestore";
 
-import {setFavorite, getDarkMode, getPokeList, searchChange, useDarkMode} from "../components/functions"
+import {setFavorite, getDarkMode, getPokeList, searchChange, useDarkMode, getLanguageText} from "../components/functions"
 
 import languageContext from "../components/language";
 
@@ -34,6 +34,9 @@ const Page = () => {
   const [dark, setDark] = useState(styles.mainwhite);
 
   const langContext = useContext(languageContext);
+
+  const lng = getLanguageText(langContext.language);
+  
   useDarkMode(setDark);
 
   getPokeList(setData, setLoad);
@@ -41,27 +44,15 @@ const Page = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Main page</title>
+        <title>{lng?.['app.pokemonlist']}</title>
         <link rel="icon" href="/favicon.ico" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossOrigin="anonymous" />
       </Head>
       <Menu />
       <main className={dark}>
         <button className={styles.buttontoggle} onClick={() => {setDark(getDarkMode());}}>Dark Mode</button>
-        <h1 className={"display-1 " + styles.title}>
-        {
-          langContext.language === "cz" && "Seznam všech pokémonů"
-        }
-        {
-          langContext.language === "en" && "List of all pokemons"
-        }
-        </h1>
-        {
-          langContext.language === "cz" && <input className={styles.search} onChange={(event)=>searchChange(event, setSearch)} placeholder="Vyhledávání" />
-        }
-        {
-          langContext.language === "en" && <input className={styles.search} onChange={(event)=>searchChange(event, setSearch)} placeholder="Search" />
-        }
+        <h1 className={"display-1 " + styles.title}>{lng?.['app.pokemonlist']}</h1>
+        <input className={styles.search} onChange={(event)=>searchChange(event, setSearch)} placeholder={lng?.['app.search']} />
         <div className={styles.flexdiv}>
           {load &&
             data.map((item: Item, key) => {
@@ -71,13 +62,7 @@ const Page = () => {
                 <Image src={"./" + item.name + ".png"} width="73%" />
                 <div className={styles.pokecontainer}>
                   <h4><b>{item.name[0].toUpperCase() + item.name.substring(1)}</b></h4>
-                  <p>{item.pokemon_v2_pokemonspecy.generation_id}
-                  {
-          langContext.language === "cz" && ". generace"
-        }
-        {
-          langContext.language === "en" && ". generation"
-        }</p>
+                  <p>{item.pokemon_v2_pokemonspecy.generation_id}{lng?.['app.generation']}</p>
                 </div>
               </div>}
                 modal
@@ -91,43 +76,15 @@ const Page = () => {
                     <div className={styles.header}> <Image src={"./" + item.name + ".png"} width="128px" />{item.name[0].toUpperCase() + item.name.substring(1)}  </div>
                     <div className={styles.content}>
                       {' '}
-                      <strong>{
-          langContext.language === "cz" && "Generace: "
-        }
-        {
-          langContext.language === "en" && "Generation: "
-        }</strong> {item.pokemon_v2_pokemonspecy.generation_id}
+                      <strong>{lng?.['app.generation0']}</strong> {item.pokemon_v2_pokemonspecy.generation_id}
                       <br /><br />
-                      <strong>
-                        {
-          langContext.language === "cz" && "Zkušenosti: "
-        }
-        {
-          langContext.language === "en" && "Experience: "
-        }</strong> {item.base_experience} 
+                      <strong>{lng?.['app.exp']}</strong> {item.base_experience} 
                       <br /><br />
-                      <strong>{
-          langContext.language === "cz" && "Váha: "
-        }
-        {
-          langContext.language === "en" && "Weight: "
-        }</strong> {item.weight / 10} kg
+                      <strong>{lng?.['app.weight']}</strong> {item.weight / 10} kg
                       <br />
-                      <strong>{
-          langContext.language === "cz" && "Výška: "
-        }
-        {
-          langContext.language === "en" && "Height: "
-        }</strong> {item.height * 10} cm
+                      <strong>{lng?.['app.height']}</strong> {item.height * 10} cm
                       <br /><br />
-                      <button id={item.name + ";" + item.id + ";" + item.pokemon_v2_pokemonspecy.generation_id} className={styles.nofavoritebutton} onClick={setFavorite} type="button">
-                      {
-          langContext.language === "cz" && "Oblíbený"
-        }
-        {
-          langContext.language === "en" && "Favorite"
-        }
-                      </button>
+                      <button id={item.name + ";" + item.id + ";" + item.pokemon_v2_pokemonspecy.generation_id} className={styles.nofavoritebutton} onClick={setFavorite} type="button">{lng?.['app.favorite']}</button>
                     </div>
                   </div>
                 )}
@@ -136,12 +93,7 @@ const Page = () => {
           }
           {!load &&
             <p>
-              {
-          langContext.language === "cz" && "Načítání..."
-        }
-        {
-          langContext.language === "en" && "Loading..."
-        }
+              {lng?.['app.loading']}
             </p>
           }
         </div>

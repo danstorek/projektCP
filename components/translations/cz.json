@@ -13,6 +13,7 @@
     "app.invaliditem": "Špatně vyplněná položka",
     "app.editsuccess": "Změna byla úspěšně uložena",
     "app.save": "Uložit",
+    "app.generation0": "Generace: ",
     "app.generation": ". generace",
     "app.exp": "Zkušenosti: ",
     "app.weight": "Váha: ",
@@ -20,5 +21,13 @@
     "app.favorite": "Oblíbený",
     "app.remove": "Odebrat",
     "app.passwordlong": "Heslo je příliš dlouhé",
-    "app.passwordshort": "Heslo je příliš krátké"
+    "app.passwordshort": "Heslo je příliš krátké",
+    "app.search": "Vyhledávání",
+    "app.logged": "Byl jsi úspěšně přihlášen",
+    "app.loginerror": "Prosím překontroluj své údaje",
+    "app.password": "Heslo",
+    "app.passdonotmatch": "Hesla se neshodují",
+    "app.registered": "Byl jsi úspěšně zaregistrován",
+    "app.username": "Uživatelské jméno",
+    "app.passwordverify": "Heslo pro ověření"
 }

@@ -13,6 +13,7 @@
     "app.invaliditem": "Invalid item",
     "app.editsuccess": "Item was successfully edited",
     "app.save": "Save",
+    "app.generation0": "Generation: ",
     "app.generation": ". generation",
     "app.exp": "Experience: ",
     "app.weight": "Weight: ",
@@ -20,5 +21,13 @@
     "app.favorite": "Favorite",
     "app.remove": "Remove",
     "app.passwordlong": "Password is too long",
-    "app.passwordshort": "Password is too short"
+    "app.passwordshort": "Password is too short",
+    "app.search": "Search",
+    "app.logged": "You were successfully logged in",
+    "app.loginerror": "Please check your credentials",
+    "app.password": "Password",
+    "app.passdonotmatch": "Passwords do not match",
+    "app.registered": "You were successfully registered",
+    "app.username": "Username",
+    "app.passwordverify": "Password for verification"
 }

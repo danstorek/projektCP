@@ -5,7 +5,7 @@ import styled from 'styled-components'
 // must be listed before other Firebase SDKs
 import firebase from "./firebaseconnect";
 
-import {isLogged} from "../components/functions";
+import {getLanguageText, isLogged} from "../components/functions";
 
 // Add the Firebase services that you want to use
 import "firebase/auth";
@@ -33,6 +33,8 @@ export const Menu: FC = () => {
 
   const langContext = useContext(languageContext);
 
+  const lng = getLanguageText(langContext.language);
+
   const logout = () => {
     firebase.auth().signOut();
     setLogged(false);
@@ -45,50 +47,20 @@ export const Menu: FC = () => {
     <NavBreak></NavBreak>
     <div>
       <ul className="navbar-nav">
-        <li className="nav-item"><Link href="../main" passHref><a className="nav-link">
-        {
-          langContext.language === "cz" && "Seznam pokémonů"
-        }
-        {
-          langContext.language === "en" && "Pokemon list"
-        }</a></Link></li>
-        <li className="nav-item"><Link href="../favorite" passHref><a className="nav-link">
-        {
-          langContext.language === "cz" && "Oblíbení pokémoni"
-        }
-        {
-          langContext.language === "en" && "Favorite pokemons"
-        }</a></Link></li>
-        <li className="nav-item"><Link href="../about" passHref><a className="nav-link">
-        {
-          langContext.language === "cz" && "O nás"
-        }
-        {
-          langContext.language === "en" && "About us"
-        }</a></Link></li>
+        <li className="nav-item"><Link href="../main" passHref><a className="nav-link">{lng?.['app.pokemonlist']}</a></Link></li>
+        <li className="nav-item"><Link href="../favorite" passHref><a className="nav-link">{lng?.['app.favoritepokemonlist']}</a></Link></li>
+        <li className="nav-item"><Link href="../about" passHref><a className="nav-link">{lng?.['app.about']}</a></Link></li>
       </ul>
     </div>
     <NavBreak></NavBreak>
     <div>
         {
           !logged &&
-          <ul className="navbar-nav"><li className="nav-item"><Link href="../login" passHref><a className="nav-link">
-            {
-          langContext.language === "cz" && "Přihlásit se"
-        }
-        {
-          langContext.language === "en" && "Login"
-        }</a></Link></li></ul>
+          <ul className="navbar-nav"><li className="nav-item"><Link href="../login" passHref><a className="nav-link">{lng?.['app.login']}</a></Link></li></ul>
         }
         {
           logged &&
-          <ul className="navbar-nav"><li className="nav-item"><Link href="../account" passHref><a className="nav-link">{firebase.auth().currentUser?.email}</a></Link></li><li className="nav-item"><button className="logout" onClick={logout}>
-          {
-          langContext.language === "cz" && "Odhlásit se"
-        }
-        {
-          langContext.language === "en" && "Log out"
-        }</button></li></ul>
+          <ul className="navbar-nav"><li className="nav-item"><Link href="../account" passHref><a className="nav-link">{firebase.auth().currentUser?.email}</a></Link></li><li className="nav-item"><button className="logout" onClick={logout}>{lng?.['app.logout']}</button></li></ul>
         }
     </div>
   </NavBar>
