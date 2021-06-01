@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Index renders the html we want 1`] = `
+<div
+  className="container"
+>
+  <nav
+    className="menu__NavBar-xmzi79-1 CBxVM navbar navbar-expand-lg navbar-dark bg-dark"
+    style={
+      Object {
+        "width": "100%",
+      }
+    }
+  >
+    <a
+      className="navbar-brand"
+      href="#"
+    >
+      Menu
+    </a>
+    <button
+      onClick={[Function]}
+    >
+      Change language
+    </button>
+    <div
+      className="menu__NavBreak-xmzi79-0 iKcXZl"
+    />
+    <div>
+      <ul
+        className="navbar-nav"
+      >
+        <li
+          className="nav-item"
+        >
+          <a
+            className="nav-link"
+            href="/main"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Pokemon list
+          </a>
+        </li>
+        <li
+          className="nav-item"
+        >
+          <a
+            className="nav-link"
+            href="/favorite"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Favorite pokemons
+          </a>
+        </li>
+        <li
+          className="nav-item"
+        >
+          <a
+            className="nav-link"
+            href="/about"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            About us
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      className="menu__NavBreak-xmzi79-0 iKcXZl"
+    />
+    <div>
+      <ul
+        className="navbar-nav"
+      >
+        <li
+          className="nav-item"
+        >
+          <a
+            className="nav-link"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <main
+    className="mainwhite"
+  >
+    <button
+      className="buttontoggle"
+      onClick={[Function]}
+    >
+      Dark Mode
+    </button>
+    <h1
+      className="display-1 title"
+    >
+      Pokemon list
+    </h1>
+    <input
+      className="search"
+      onChange={[Function]}
+      placeholder="Search"
+    />
+    <div
+      className="flexdiv"
+    >
+      <p>
+        Loading...
+      </p>
+    </div>
+  </main>
+</div>
+`;

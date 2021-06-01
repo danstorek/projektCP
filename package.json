@@ -7,6 +7,7 @@
     "dev": "yarn codegen && next",
     "build": "yarn codegen && next build",
     "test": "yarn codegen && jest",
+    "test-watch": "jest test --watch",
     "start": "next start",
     "postinstall": "yarn codegen",
     "type-check": "tsc --pretty --noEmit",
