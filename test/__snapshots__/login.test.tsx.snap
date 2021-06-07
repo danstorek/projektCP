@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Index renders the html we want 1`] = `
+<div
+  className="container"
+>
+  <main
+    className="mainwhite"
+  >
+    <button
+      className="buttontoggle"
+      onClick={[Function]}
+    >
+      Dark Mode
+    </button>
+    <h1
+      className="title"
+    >
+      Login
+    </h1>
+    <br />
+    <form
+      action="#"
+      onReset={[Function]}
+      onSubmit={[Function]}
+    >
+      <h2
+        className="title2"
+      >
+        Email
+      </h2>
+      <input
+        disabled={false}
+        name="email"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="email"
+        value=""
+      />
+      <h2
+        className="title2"
+      >
+        Password
+      </h2>
+      <input
+        disabled={false}
+        name="password"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="password"
+        value=""
+      />
+      <br />
+      <button
+        className="btn btn-primary"
+        disabled={false}
+        type="submit"
+      >
+        Login
+      </button>
+      <a
+        href="/register"
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+      >
+        Register
+      </a>
+    </form>
+    <p
+      className="ok"
+    >
+      
+    </p>
+    <a
+      href="/main"
+      onClick={[Function]}
+      onMouseEnter={[Function]}
+    >
+      Click here to get to the main page.
+    </a>
+  </main>
+</div>
+`;
