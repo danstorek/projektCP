@@ -1,4 +1,5 @@
 import { Menu } from '../components/menu';
+import {DarkModeButton, PageCont} from '../components/styledComps'
 import styles from '../styles/Home.module.css'
 import Head from 'next/head';
 import firebase from "../components/firebaseconnect";
@@ -34,7 +35,7 @@ const About = () => {
   useDarkMode(setDark);
 
   return (
-    <div className={styles.container}>
+    <PageCont>
       <Head>
         <title>{lng?.['app.accsettings']}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -42,7 +43,7 @@ const About = () => {
       </Head>
       <Menu />
       <main className={dark}>
-        <button className={styles.buttontoggle} onClick={() => {setDark(getDarkMode());}}>Dark Mode</button>
+        <DarkModeButton onClick={() => {setDark(getDarkMode());}}>Dark Mode</DarkModeButton>
         <h1 className={"display-1 " + styles.title}>{lng?.['app.accsettings']+" "+username}</h1>
         <h2 style={{ marginTop: "50px" }}>{lng?.['app.usrnamechange']}</h2>
 
@@ -89,7 +90,7 @@ const About = () => {
         <p className={styles.ok}>{msg}</p>
 
       </main>
-    </div>
+    </PageCont>
   )
 }
 export default About

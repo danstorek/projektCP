@@ -14,6 +14,7 @@ import "firebase/firestore";
 import { getDarkMode, useDarkMode, isLogged, getLanguageText } from "../components/functions"
 
 import languageContext from "../components/language";
+import { PageCont } from '../components/styledComps';
 
 type Errors = {
   email?: any;
@@ -37,7 +38,7 @@ const Page = () => {
   useDarkMode(setDark);
 
   return (
-    <div className={styles.container}>
+    <PageCont>
       <Head>
         <title>{lng?.['app.login']}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -100,7 +101,7 @@ const Page = () => {
         <p className={error}>{msg}</p>
         <Link href="./main">{lng?.['app.clickheretogetback']}</Link>
       </main>
-    </div>
+    </PageCont>
   )
 }
 

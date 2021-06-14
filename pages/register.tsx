@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
 import firebase from "../components/firebaseconnect";
+import { PageCont } from '../components/styledComps';
 
 // Add the Firebase services that you want to use
 import "firebase/auth";
@@ -35,7 +36,7 @@ const Page = () => {
   useDarkMode(setDark);
 
   return (
-    <div className={styles.container}>
+    <PageCont className={styles.container}>
       <Head>
         <title>Registration</title>
         <link rel="icon" href="/favicon.ico" />
@@ -133,7 +134,7 @@ const Page = () => {
         <p className={error}>{msg}</p>
         <Link href="./main">{lng?.['app.clickheretogetback']}</Link>
       </main>
-    </div>
+    </PageCont>
   )
 }
 

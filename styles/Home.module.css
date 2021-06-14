@@ -1,11 +1,3 @@
-.container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .graphql {
   border: solid 1px silver;
   padding: 32px;
@@ -34,13 +26,6 @@
   align-items: center;
   background-color: #DDDDDD;
   color: #222222;
-}
-
-.buttontoggle{
-  color:black;
-  position: fixed;
-  left: 0;
-  top: 0;
 }
 
 .footer {
@@ -185,18 +170,6 @@
   height: 256px;
 }
 
-.search{
-  margin-top: 50px;
-  font-size: 30px;
-  height: 60px;
-  width: 400px;
-  border-width: 2px;
-  border-style: solid;
-  border-color: black;
-  border-radius: 25px;
-  text-align: center;
-  outline: transparent;
-}
 
 .pokecard {
   /* Add shadows to create the "card" effect */

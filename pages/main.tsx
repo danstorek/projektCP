@@ -1,4 +1,5 @@
 import { Menu } from '../components/menu';
+import {SearchBarStyled, DarkModeButton, PageCont} from '../components/styledComps'
 import styles from '../styles/Home.module.css'
 import Head from 'next/head';
 import { useContext, useState } from 'react';
@@ -42,7 +43,7 @@ const Page = () => {
   getPokeList(setData, setLoad);
 
   return (
-    <div className={styles.container}>
+    <PageCont>
       <Head>
         <title>{lng?.['app.pokemonlist']}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -50,9 +51,9 @@ const Page = () => {
       </Head>
       <Menu />
       <main className={dark}>
-        <button className={styles.buttontoggle} onClick={() => {setDark(getDarkMode());}}>Dark Mode</button>
+        <DarkModeButton onClick={() => {setDark(getDarkMode());}}>Dark Mode</DarkModeButton>
         <h1 className={"display-1 " + styles.title}>{lng?.['app.pokemonlist']}</h1>
-        <input className={styles.search} onChange={(event)=>searchChange(event, setSearch)} placeholder={lng?.['app.search']} />
+        <SearchBarStyled onChange={(event)=>searchChange(event, setSearch)} placeholder={lng?.['app.search']} />
         <div className={styles.flexdiv}>
           {load &&
             data.map((item: Item, key) => {
@@ -98,7 +99,7 @@ const Page = () => {
           }
         </div>
       </main>
-    </div>
+    </PageCont>
   )
 }
 

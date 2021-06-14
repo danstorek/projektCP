@@ -1,4 +1,5 @@
 import { Menu } from '../components/menu';
+import {DarkModeButton, PageCont} from '../components/styledComps'
 import styles from '../styles/Home.module.css'
 import Head from 'next/head';
 import Link from 'next/link';
@@ -18,7 +19,7 @@ const About = () => {
   const lng = getLanguageText(langContext.language);
 
   return (
-    <div className={styles.container}>
+    <PageCont>
       <Head>
         <title>{lng?.['app.about']}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -26,11 +27,11 @@ const About = () => {
       </Head>
       <Menu />
       <main className={dark}>
-        <button className={styles.buttontoggle} onClick={() => { setDark(getDarkMode()); }}>Dark Mode</button>
+        <DarkModeButton onClick={() => { setDark(getDarkMode()); }}>Dark Mode</DarkModeButton>
         <h1 className={"display-1 " + styles.title}>{lng?.['app.about']}</h1>
         <h2 style={{ marginTop: "50px" }}><Link href="/main"><a>{lng?.['app.clickheretogetback']}</a></Link></h2>
       </main>
-    </div>
+    </PageCont>
   )
 }
 
